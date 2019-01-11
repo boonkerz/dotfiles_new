@@ -8,7 +8,8 @@ mkdir -p $HOME/.config/i3blocks
 
 rm -f $HOME/.bashrc && ln -s $(pwd)/.bashrc $HOME/.bashrc
 
-rm -f $HOME/.xessionrc && ln -s $(pwd)/.xessionrc $HOME/.xessionrc
+rm -f $HOME/.xmodmap && ln -s $(pwd)/.xmodmap $HOME/.xmodmap
+rm -f $HOME/.xinitrc && ln -s $(pwd)/.xsessionrc $HOME/.xinitrc
 
 rm -f $HOME/.zprofile && ln -s $(pwd)/.profile $HOME/.zprofile
 rm -f $HOME/.xprofile && ln -s $(pwd)/.profile $HOME/.xprofile

@@ -11,7 +11,7 @@ export FILE="ranger"
 
 #[ ! -f ~/.shortcuts ] && shortcuts >/dev/null 2>&1
 
-#[ -f ~/.bashrc ] && source "$HOME/.bashrc"
+source "$HOME/.bashrc"
 
 
 # Start graphical server if i3 not already running.
@@ -19,4 +19,4 @@ export FILE="ranger"
 
 # Switch escape and caps if tty:
 #sudo -n loadkeys ~/.scripts/ttymaps.kmap 2>/dev/null
-
+source ~/.scripts/ttymaps.kmap
