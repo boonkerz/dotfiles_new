@@ -6,7 +6,13 @@
 mkdir -p $HOME/.config/i3blocks
 
 
-rm -f $HOME/.zprofile && ln -s $(pwd)/.zprofile $HOME/.zprofile
+rm -f $HOME/.bashrc && ln -s $(pwd)/.bashrc $HOME/.bashrc
+
+rm -f $HOME/.xessionrc && ln -s $(pwd)/.xessionrc $HOME/.xessionrc
+
+rm -f $HOME/.zprofile && ln -s $(pwd)/.profile $HOME/.zprofile
+rm -f $HOME/.xprofile && ln -s $(pwd)/.profile $HOME/.xprofile
+rm -f $HOME/.profile && ln -s $(pwd)/.profile $HOME/.profile
 rm -f $HOME/.Xresources && ln -s $(pwd)/.Xresources $HOME/.Xresources
 rm -f $HOME/.zshrc && ln -s $(pwd)/.zshrc $HOME/.zshrc
 
