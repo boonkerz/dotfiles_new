@@ -8,6 +8,7 @@ export TERMINAL="st"
 export BROWSER="firefox"
 export READER="zathura"
 export FILE="ranger"
+export TERM="xterm"
 
 #[ ! -f ~/.shortcuts ] && shortcuts >/dev/null 2>&1
 

@@ -7,6 +7,7 @@
 let mapleader =" "
 
 call plug#begin('~/.vim/plugged')
+Plug 'arnaud-lb/vim-php-namespace'
 Plug 'junegunn/goyo.vim'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'jreybert/vimagit'
@@ -23,6 +24,15 @@ call plug#end()
 	set nocompatible
 	filetype plugin on
 	syntax on
+	" For everything else, use a tab width of 4 space chars.
+	set tabstop=4       " The width of a TAB is set to 4.
+	                    " Still it is a \t. It is just that
+	                    " Vim will interpret it to be having
+	                    " a width of 4.
+	set shiftwidth=4    " Indents will have a width of 4.
+	set softtabstop=4   " Sets the number of columns for a TAB.
+	set expandtab       " Expand TABs to spaces.
+
 	set encoding=utf-8
 	set number relativenumber
 " Enable autocompletion:
