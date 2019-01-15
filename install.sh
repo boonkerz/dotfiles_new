@@ -27,3 +27,4 @@ ln -s $(pwd)/.scripts $HOME/.scripts
 
 mv $HOME/.config/i3/config $HOME/.config/i3/config.old && ln -s $(pwd)/.config/i3/config $HOME/.config/i3/config
 mv $HOME/.config/polybar/config $HOME/.config/polybar/config.old && ln -s $(pwd)/.config/polybar/config $HOME/.config/polybar/config
+ln -s $(pwd)/.config/dunst/config $HOME/.config/dunst/dunstrc

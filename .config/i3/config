@@ -1,7 +1,5 @@
 # Basic Config
 #
-gaps inner 10
-gaps outer 10
 #xmodmap -e "clear lock"
 #xmodmap -e "keysym Caps_Lock = Escape"
 
@@ -11,7 +9,8 @@ exec_always --no-startup-id $HOME/.scripts/polybar/launch.sh
 exec --no-startup-id setbg
 # Start Composite
 exec --no-startup-id xcompmgr
-
+# Notifcation
+exec --no-startup-id dunst
 
 set $mod Mod4
 
@@ -56,6 +55,12 @@ bindsym $mod+Shift+minus split horizontal;; exec st
 
 # split in vertical orientation
 bindsym $mod+minus split vertical;; exec st
+
+# split orientation
+bindsym $mod+z split h;exec notify-send 'tile horizontally'
+bindsym $mod+v split v;exec notify-send 'tile vertically'
+bindsym $mod+q split toggle
+
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -118,33 +123,6 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym odiaeresis resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
-}
-
-bindsym $mod+r mode "resize"
-
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 
@@ -174,22 +152,105 @@ client.focused_inactive	$transparent	$blue		$white		$darkblue		$darkblack
 client.urgent		$darkred	$darkred	$black		$darkred		$darkred
 client.background $black
 
+# Theme colors
+# class                   border  backgr. text  ndic.   child_border
+  client.focused          #556064 #556064 #80FFF9 #FDF6E3
+  client.focused_inactive #2F3D44 #2F3D44 #AD69AF #454948
+  client.unfocused        #2F3D44 #2F3D44 #AD69AF #454948
+  client.urgent           #CB4B16 #FDF6E3 #AD69AF #268BD2
+  client.placeholder      #000000 #0c0c0c #ffffff #000000 
+
+  client.background       #2B2C2B
 
 bar {
-  #i3bar_command $HOME/.scripts/polybar/launch.sh
+    mode invisible
 }
-#bar {
-#	font pango:mono 10
-#	position top
-#	mode dock
-#        status_command i3blocks
-#	colors {
-#		background $darkblack
-#		statusline $darkwhite
-#		separator $cyan
-#		focused_workspace  $blue $darkblue $darkblack
-#        	active_workspace   $blue $blue $darkwhite
-#      		inactive_workspace $darkblack $darkblack $white
-#        	urgent_workspace   $darkblack $darkblack $white
-#	}	
-#}
+
+#############################
+### Resize Mode  ############
+#############################
+bindsym $mod+r mode "resize"
+mode "resize" {
+        # Originally set to jkl;.
+        # These bindings trigger as soon as you enter the resize mode
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 4 px or 4 ppt
+        bindsym j resize grow height 4 px or 4 ppt
+        bindsym k resize shrink height 4 px or 4 ppt
+        bindsym l resize grow width 4 px or 4 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # exit resize mode: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+#############################
+### settings for i3-gaps: ###
+#############################
+
+# Set inner/outer gaps
+gaps inner 10
+gaps outer -4
+
+# Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
+# gaps inner|outer current|all set|plus|minus <px>
+# gaps inner all set 10
+# gaps outer all plus 5
+
+# Smart gaps (gaps used if only more than one container on the workspace)
+smart_gaps on
+
+# Smart borders (draw borders around container only if it is not the only container on this workspace) 
+# on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
+smart_borders on
+
+# Press $mod+Shift+g to enter the gap mode. 
+# Choose o or i for modifying outer/inner gaps.
+# Press one of + / - (in-/decrement for current workspace) 
+# or 0 (remove gaps for current workspace). If you also press Shift 
+# with these keys, the change will be global for all workspaces.
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
